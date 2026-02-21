@@ -11,7 +11,7 @@ export const taskController = {
   },
 
   get(req: Request, res: Response) {
-    const task = taskService.findById(req.params.taskId);
+    const task = taskService.findById(req.params.taskId as string);
     if (!task) {
       res.status(404).json({ message: 'Task not found' });
       return;
@@ -37,7 +37,7 @@ export const taskController = {
   },
 
   update(req: AuthenticatedRequest, res: Response) {
-    const updated = taskService.update(req.params.taskId, req.body);
+    const updated = taskService.update(req.params.taskId as string, req.body);
     if (!updated) {
       res.status(404).json({ message: 'Task not found' });
       return;
@@ -52,7 +52,7 @@ export const taskController = {
   },
 
   remove(req: Request, res: Response) {
-    if (!taskService.remove(req.params.taskId)) {
+    if (!taskService.remove(req.params.taskId as string)) {
       res.status(404).json({ message: 'Task not found' });
       return;
     }
@@ -61,11 +61,11 @@ export const taskController = {
   },
 
   addDependency(req: Request, res: Response) {
-    const dependency = taskDependencyService.create(req.params.taskId, req.body.dependsOnTaskId);
+    const dependency = taskDependencyService.create(req.params.taskId as string, req.body.dependsOnTaskId);
     res.status(201).json(dependency);
   },
 
   listDependencies(req: Request, res: Response) {
-    res.json(taskDependencyService.listByTask(req.params.taskId));
+    res.json(taskDependencyService.listByTask(req.params.taskId as string));
   },
 };

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 import { userService } from '../services';
 import { LoginDto } from '../types';
 
@@ -13,7 +13,7 @@ export const authController = {
     res.status(201).json({ user: safeUser });
   },
 
-  login(req: Request<unknown, unknown, LoginDto>, res: Response) {
+  login(req: Request, res: Response) {
     const user = userService.findByEmail(req.body.email.toLowerCase());
     if (!user || !userService.verifyPassword(user, req.body.password)) {
       res.status(401).json({ message: 'Invalid email or password' });
