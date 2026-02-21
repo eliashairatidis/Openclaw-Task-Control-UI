@@ -1,88 +1,40 @@
 # OpenClaw Task Control
 
-This repository is currently a scaffold for the OpenClaw Task Control project.
+Infrastructure scaffolding for local Docker and Kubernetes deployments.
 
-## Current State
+## Quick start (single source of truth)
 
-- Backend source folders and file paths are present under `backend/src/`.
-- Database, Docker, Kubernetes, docs, and agent CLI directories are present.
-- Files are currently placeholders and need implementation content.
+1. Copy env file:
+   ```bash
+   cp .env.example .env
+   ```
+2. Start local stack:
+   ```bash
+   docker compose up --build -d
+   ```
+3. Access services:
+   - Frontend: `http://localhost:5173`
+   - Backend API: `http://localhost:3001/api`
+   - Backend WS: `ws://localhost:3001/ws`
+   - PostgreSQL: `localhost:5432` (service: `postgres`)
+   - Redis: `localhost:6379` (service: `redis`)
 
-## Project Structure
+Service names and ports above are reused across:
+- `.env.example`
+- `docker-compose.yml`
+- `k8s/*.yaml`
 
+## Kubernetes apply order
+
+```bash
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/postgres.yaml
+kubectl apply -f k8s/redis.yaml
+kubectl apply -f k8s/backend.yaml
+kubectl apply -f k8s/frontend.yaml
 ```
-openclaw-task-control/
-├── .env.example
-├── PROJECT_SUMMARY.md
-├── README.md
-├── agent-cli/
-│   ├── .gitkeep
-│   └── README.md
-├── backend/
-│   └── src/
-│       ├── index.ts
-│       ├── config/
-│       │   ├── database.ts
-│       │   └── redis.ts
-│       ├── entities/
-│       │   ├── User.ts
-│       │   ├── Task.ts
-│       │   ├── TaskDependency.ts
-│       │   ├── Comment.ts
-│       │   ├── ActivityLog.ts
-│       │   ├── AgentLog.ts
-│       │   ├── FileRecord.ts
-│       │   ├── AgentStatus.ts
-│       │   └── index.ts
-│       ├── controllers/
-│       │   ├── authController.ts
-│       │   ├── taskController.ts
-│       │   ├── userController.ts
-│       │   ├── commentController.ts
-│       │   ├── activityLogController.ts
-│       │   ├── agentController.ts
-│       │   └── fileController.ts
-│       ├── services/
-│       │   ├── taskService.ts
-│       │   ├── userService.ts
-│       │   ├── activityLogService.ts
-│       │   ├── commentService.ts
-│       │   ├── agentLogService.ts
-│       │   ├── agentStatusService.ts
-│       │   ├── fileService.ts
-│       │   ├── taskDependencyService.ts
-│       │   └── index.ts
-│       ├── routes/
-│       │   ├── auth.ts
-│       │   ├── tasks.ts
-│       │   ├── users.ts
-│       │   ├── comments.ts
-│       │   ├── activityLogs.ts
-│       │   ├── agents.ts
-│       │   └── files.ts
-│       ├── middleware/
-│       │   ├── auth.ts
-│       │   ├── errorHandler.ts
-│       │   └── validation.ts
-│       ├── types/
-│       │   └── index.ts
-│       ├── websocket/
-│       │   └── index.ts
-│       └── seed/
-│           └── index.ts
-├── database/
-│   └── schema.sql
-├── docker/
-│   ├── Dockerfile.backend
-│   ├── Dockerfile.frontend
-│   └── nginx.conf
-├── docs/
-│   └── agent-integration.md
-└── k8s/
-    ├── namespace.yaml
-    ├── postgres.yaml
-    ├── redis.yaml
-    ├── backend.yaml
-    ├── frontend.yaml
-    └── agent.yaml
-```
+
+## Notes
+
+- `database/schema.sql` initializes PostgreSQL when running Docker Compose.
+- Replace placeholder backend/frontend image names in Kubernetes manifests.
