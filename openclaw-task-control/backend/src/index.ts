@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import cors from 'cors';
-import express from 'express';
+import express, { Request, Response } from 'express';
 import http from 'http';
 import { connectDatabase } from './config/database';
 import { connectRedis } from './config/redis';
@@ -25,7 +25,7 @@ app.use(
 );
 app.use(express.json({ limit: '2mb' }));
 
-app.get('/health', (_req, res) => {
+app.get('/health', (_req: Request, res: Response) => {
   res.json({ ok: true, service: 'openclaw-task-control-backend' });
 });
 

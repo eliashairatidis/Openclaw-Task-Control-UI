@@ -1,8 +1,8 @@
-export type { User } from './User';
-export type { Task } from './Task';
-export type { TaskDependency } from './TaskDependency';
-export type { Comment } from './Comment';
-export type { ActivityLog } from './ActivityLog';
-export type { AgentLog } from './AgentLog';
-export type { FileRecord } from './FileRecord';
-export type { AgentStatus } from './AgentStatus';
+export { User } from './User';
+export { Task } from './Task';
+export { TaskDependency } from './TaskDependency';
+export { Comment } from './Comment';
+export { ActivityLog } from './ActivityLog';
+export { AgentLog } from './AgentLog';
+export { FileRecord } from './FileRecord';
+export { AgentStatus } from './AgentStatus';

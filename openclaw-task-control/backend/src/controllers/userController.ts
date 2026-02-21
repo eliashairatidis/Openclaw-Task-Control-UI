@@ -9,7 +9,7 @@ export const userController = {
   },
 
   get(req: Request, res: Response) {
-    const user = userService.findById(req.params.userId);
+    const user = userService.findById(req.params.userId as string);
     if (!user) {
       res.status(404).json({ message: 'User not found' });
       return;
@@ -20,7 +20,7 @@ export const userController = {
   },
 
   update(req: Request, res: Response) {
-    const user = userService.update(req.params.userId, req.body);
+    const user = userService.update(req.params.userId as string, req.body);
     if (!user) {
       res.status(404).json({ message: 'User not found' });
       return;

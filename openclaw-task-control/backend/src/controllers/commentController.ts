@@ -5,7 +5,7 @@ import { ActivityType } from '../types';
 
 export const commentController = {
   listByTask(req: Request, res: Response) {
-    res.json(commentService.listByTask(req.params.taskId));
+    res.json(commentService.listByTask(req.params.taskId as string));
   },
 
   create(req: AuthenticatedRequest, res: Response) {
@@ -25,7 +25,7 @@ export const commentController = {
   },
 
   remove(req: Request, res: Response) {
-    if (!commentService.remove(req.params.commentId)) {
+    if (!commentService.remove(req.params.commentId as string)) {
       res.status(404).json({ message: 'Comment not found' });
       return;
     }
