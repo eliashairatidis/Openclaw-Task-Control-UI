@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+const path = require('path');
+const fs = require('fs');
+
+const cliPath = path.resolve(__dirname, '..', 'dist', 'cli.js');
+if (!fs.existsSync(cliPath)) {
+  console.error('agent-cli is not built yet. Run: npm run build');
+  process.exit(2);
+}
+
+require(cliPath);
